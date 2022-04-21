@@ -37,7 +37,7 @@ async function createStart(
       environment: environment,
       description: description,
       auto_merge: false,
-      transient_environment: false,
+      transient_environment: true,
       payload: stepArgs.payload,
     });
     if (deployment.status == 201) {
