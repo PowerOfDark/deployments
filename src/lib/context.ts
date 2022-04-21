@@ -13,6 +13,7 @@ export interface DeploymentContext {
     description?: string;
     environment: string;
     logsURL: string;
+    maxDeployments?: number;
   };
 }
 
@@ -31,6 +32,8 @@ export function collectDeploymentContext(): DeploymentContext {
     throw new Error(`invalid target repository: ${owner}/${repo}`);
   }
 
+  const maxDeploymentsInput = getOptionalInput("max_deployments");
+
   return {
     ref: getOptionalInput("ref") || ref,
     sha,
@@ -40,6 +43,7 @@ export function collectDeploymentContext(): DeploymentContext {
     coreArgs: {
       environment: getRequiredInput("env"),
       description: getOptionalInput("desc"),
+      maxDeployments: Number.parseInt(maxDeploymentsInput!) || undefined,
       logsURL:
         getOptionalInput("logs") ||
         `https://github.com/${owner}/${repo}/commit/${sha}/checks`,
