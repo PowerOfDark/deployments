@@ -48,6 +48,7 @@ async function createFinish(
   const {
     data: { id: statusID },
   } = await github.rest.repos.createDeploymentStatus({
+    mediaType: { previews: ['ant-man', 'flash'] },
     owner: context.owner,
     repo: context.repo,
     deployment_id: parseInt(stepArgs.deploymentID, 10),
