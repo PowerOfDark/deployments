@@ -43,7 +43,7 @@ async function deactivateEnvironment(
     const shouldDelete = maxDeployments != null && i >= maxDeployments;
     if (shouldDelete) {
       github.rest.repos.deleteDeployment({owner, repo, deployment_id: deployment.id });
-      log.debug(`${environment}.${deployment.id} deleted`);
+      log.info(`${environment}.${deployment.id}: deleting deployment (${deployment.sha})`);
     }
   }
 
