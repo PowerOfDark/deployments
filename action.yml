@@ -51,7 +51,10 @@ inputs:
   auto_inactive:
     required: false
     description: Whether to mark existing deployments as inactive if a deployment succeeds (for `finish` only)
-    default: 'false'
+    default: 'true'
   payload:
     required: false
     description: JSON-formatted dictionary with extra information about the deployment (for `start` only)
+  max_deployments:
+    required: false
+    description: If specified, `override` will only keep `max_deployments` most recent deployments and delete the rest.

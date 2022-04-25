@@ -7,7 +7,7 @@ import { DeploymentContext } from "./context";
  */
 async function deactivateEnvironment(
   github: InstanceType<typeof GitHub>,
-  { log, owner, repo, coreArgs: { environment } }: DeploymentContext
+  { log, owner, repo, coreArgs: { environment, maxDeployments } }: DeploymentContext
 ) {
   const deployments = await github.rest.repos.listDeployments({
     owner,
@@ -28,6 +28,7 @@ async function deactivateEnvironment(
     log.info(
       `${environment}.${deployment.id}: setting deployment (${deployment.sha}) state to "${deactivatedState}"`
     );
+
     const res = await github.rest.repos.createDeploymentStatus({
       owner,
       repo,
@@ -38,6 +39,12 @@ async function deactivateEnvironment(
       state: res.data.state,
       url: res.data.url,
     });
+
+    const shouldDelete = maxDeployments != null && i >= maxDeployments;
+    if (shouldDelete) {
+      await github.rest.repos.deleteDeployment({owner, repo, deployment_id: deployment.id });
+      log.info(`${environment}.${deployment.id}: deleting deployment (${deployment.sha})`);
+    }
   }
 
   log.info(`${environment}: ${existing} deployments updated`);
