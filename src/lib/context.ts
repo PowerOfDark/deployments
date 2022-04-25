@@ -33,6 +33,8 @@ export function collectDeploymentContext(): DeploymentContext {
   }
 
   const maxDeploymentsInput = getOptionalInput("max_deployments");
+  let maxDeployments = Number.parseInt(maxDeploymentsInput!) || undefined;
+  if (maxDeployments !== undefined && maxDeployments <= 0) maxDeployments = 1;
 
   return {
     ref: getOptionalInput("ref") || ref,
@@ -43,7 +45,7 @@ export function collectDeploymentContext(): DeploymentContext {
     coreArgs: {
       environment: getRequiredInput("env"),
       description: getOptionalInput("desc"),
-      maxDeployments: Number.parseInt(maxDeploymentsInput!) || undefined,
+      maxDeployments,
       logsURL:
         getOptionalInput("logs") ||
         `https://github.com/${owner}/${repo}/commit/${sha}/checks`,
