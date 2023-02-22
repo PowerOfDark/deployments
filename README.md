@@ -3,6 +3,8 @@
 `bobheadxi/deployments` is a [GitHub Action](https://github.com/features/actions) for working painlessly with [GitHub deployment statuses](https://docs.github.com/en/rest/reference/deployments).
 Instead of exposing convoluted Action configuration that mirrors that of the [GitHub API](https://developer.github.com/v3/repos/deployments/) like some of the other available Actions do, this Action simply exposes a number of configurable, easy-to-use "steps" common to most deployment lifecycles.
 
+> 📢 This project is in need of additional maintainers - if you are interested in helping out please [let me know](https://github.com/bobheadxi/deployments/discussions/103)!
+
 - [Configuration](#configuration)
   - [`step: start`](#step-start)
   - [`step: finish`](#step-finish)
@@ -249,6 +251,8 @@ jobs:
 ### `step: delete-env`
 
 This is the same as `deactivate-env`, except deletes the environment entirely. See [`step: deactivate-env`](#step-deactivate-env) for more details.
+
+Note that the default `GITHUB_TOKEN` does not allow environment deletion - you have to set a personal access token and provide it in the `token` input.
 
 Refer to the [core configuration](#configuration) for available [`inputs`](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepswith).
 
